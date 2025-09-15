@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Surprise for Mai Nhè</title>
+  <title>for Vivisteria and only her</title>
+  <!-- Google Fonts: lovey/cursive style -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       display: flex;
@@ -11,31 +13,61 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-image: url('care-bears-background.jpg'); /* Background image in same folder */
-      background-size: cover; /* Make it cover full screen */
-      font-family: Arial, sans-serif;
+      background-image: url('care-bears-background.jpg');
+      background-size: cover;
+      font-family: 'Pacifico', cursive;
       text-align: center;
+      color: pink;
+      position: relative;
+      overflow: hidden; /* keep corner images visible */
     }
+
     #container {
       position: relative;
+      z-index: 1;
     }
+
     #message {
-      font-size: 24px;
+      font-size: 28px;
       margin-bottom: 20px;
+      color: red; /* final message */
     }
+
     #wordDisplay {
       font-size: 24px;
       margin-bottom: 20px;
-      color: darkred;
+      color: pink;
     }
-    #surpriseImage {
-      width: 300px;
-      height: 300px;
+
+    #surpriseImage, .cornerImage {
+      width: 120px;
+      height: 120px;
       object-fit: cover;
       border: 3px solid white;
       border-radius: 10px;
-      display: none; /* Hidden until the end */
+      display: none;
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.6s ease;
     }
+
+    /* Center image slightly bigger */
+    #surpriseImage {
+      width: 200px;
+      height: 200px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0);
+    }
+
+    /* Corner image positions */
+    #topLeft { top: 10px; left: 10px; }
+    #topRight { top: 10px; right: 10px; }
+    #bottomLeft { bottom: 10px; left: 10px; }
+    #bottomRight { bottom: 10px; right: 10px; }
+
     button {
       padding: 20px 40px;
       font-size: 24px;
@@ -46,24 +78,38 @@
       color: pink;
       transition: all 0.3s;
     }
+
     button:hover {
       background-color: pink;
       color: white;
+    }
+
+    /* Animation classes */
+    .showImage {
+      display: block;
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
 <body>
   <div id="container">
-    <div id="message">Bất ngờ dành cho Mai Nhè</div>
+    <div id="message">for my little spark</div>
     <div id="wordDisplay"></div>
     <img id="surpriseImage" src="flower.jpg" alt="Surprise Image">
     <button id="animatedButton" onclick="showNextWord()">Click for a Surprise</button>
   </div>
 
+  <!-- Corner images -->
+  <img id="topLeft" class="cornerImage" src="flower.jpg" alt="">
+  <img id="topRight" class="cornerImage" src="flower.jpg" alt="">
+  <img id="bottomLeft" class="cornerImage" src="flower.jpg" alt="">
+  <img id="bottomRight" class="cornerImage" src="flower.jpg" alt="">
+
   <script>
     const words = [
-      "em", "dành", "tặng", "cái", "web", "này", "cho", "chị", "để", "nói",
-      "rằng", "là", "cảm", "ơn", "vì", "1", "tháng", "qua", "chị", "đã", "bên", "em"
+      "em","dành","tặng","cái","web","này","cho","chị","để","nói",
+      "rằng","là","cảm","ơn","vì","1","tháng","qua","chị","đã","bên","em"
     ];
     let wordIndex = 0;
 
@@ -71,15 +117,35 @@
       const wordDisplay = document.getElementById("wordDisplay");
       const surpriseImage = document.getElementById("surpriseImage");
       const button = document.getElementById("animatedButton");
+      const corners = [
+        document.getElementById("topLeft"),
+        document.getElementById("topRight"),
+        document.getElementById("bottomLeft"),
+        document.getElementById("bottomRight")
+      ];
 
       if (wordIndex < words.length) {
         wordDisplay.textContent = words[wordIndex];
-        surpriseImage.style.display = "none"; // Hide while words appear
+        surpriseImage.classList.remove("showImage");
+        corners.forEach(c => c.classList.remove("showImage"));
         wordIndex++;
       } else {
-        document.getElementById("message").innerText = "Cảm ơn Chị nhiềuuuuuuuu";
-        surpriseImage.style.display = "block"; // Show the flower
-        button.style.display = "none"; // Hide button
+        // Show final message
+        document.getElementById("message").innerText = "for my little spark";
+        document.getElementById("message").style.color = "red";
+
+        // Animate center image
+        surpriseImage.classList.add("showImage");
+
+        // Animate corner images one by one with delay
+        corners.forEach((img, i) => {
+          setTimeout(() => {
+            img.classList.add("showImage");
+          }, i * 300); // 0ms, 300ms, 600ms, 900ms
+        });
+
+        // Hide button
+        button.style.display = "none";
       }
     }
   </script>
