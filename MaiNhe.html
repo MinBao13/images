@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise for Mai Nhè</title>
+    <style>
+        /* CSS Styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('care-bears-background.jpg'); /* Set Care Bears background */
+            background-size: cover; /* Ensure background covers the whole screen */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        #container {
+            position: relative;
+        }
+        #message {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #wordDisplay {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: darkred;
+        }
+        #reveal {
+            display: none;
+            margin-top: 20px;
+        }
+        button {
+            padding: 20px 40px; /* Increased size */
+            font-size: 24px;    /* Increased font size */
+            cursor: pointer;
+            border: none;
+            border-radius: 10px; /* Rounded corners */
+            background-color: white;
+            color: pink;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        button:hover {
+            background-color: pink;
+            color: white;
+        }
+        /* Image Styles */
+        #surpriseImage {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border: 3px solid white;
+            border-radius: 10px;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="message">Bất ngờ dành cho Mai Nhè</div>
+        <div id="wordDisplay"></div>
+        <img id="surpriseImage" src="flower.jpg" alt="Surprise Image"> <!-- Path to your surprise image -->
+        <button id="animatedButton" onclick="showNextWord()">Click for a Surprise</button>
+    </div>
+    <script>
+        // JavaScript to handle word-by-word display and image at the end
+        const words = ["em", "dành", "tặng", "cái", "web", "này", "cho", "chị", "để", "nói", "rằng", "là", "cảm", "ơn", "vì", "1", "tháng", "qua", "chị", "đã", "bên", "em"];
+        let wordIndex = 0;
+
+        function showNextWord() {
+            const wordDisplay = document.getElementById("wordDisplay");
+            const surpriseImage = document.getElementById("surpriseImage");
+            const button = document.getElementById("animatedButton");
+
+            if (wordIndex < words.length) {
+                wordDisplay.innerHTML = words[wordIndex];
+                surpriseImage.style.display = 'none'; // Hide the image while displaying words
+                wordIndex++;
+            } else {
+                // When all words are shown, reveal the final message and image
+                document.getElementById('message').innerText = 'Cảm ơn Chị nhiềuuuuuuuu';
+                surpriseImage.style.display = 'block'; // Show the image
+                button.style.display = 'none'; // Hide the button after the final word
+            }
+        }
+    </script>
+</body>
+</html>
