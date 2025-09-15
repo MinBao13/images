@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>for Vivisteria and only her</title>
-  <!-- Google Fonts: lovey/cursive style -->
+  <!-- Lovey font -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
@@ -17,9 +17,9 @@
       background-size: cover;
       font-family: 'Pacifico', cursive;
       text-align: center;
-      color: pink;
+      color: red;
       position: relative;
-      overflow: hidden; /* keep corner images visible */
+      overflow: hidden;
     }
 
     #container {
@@ -28,20 +28,20 @@
     }
 
     #message {
-      font-size: 28px;
+      font-size: 40px;
       margin-bottom: 20px;
-      color: red; /* final message */
+      color: red;
     }
 
     #wordDisplay {
-      font-size: 24px;
+      font-size: 32px;
       margin-bottom: 20px;
-      color: pink;
+      color: red;
     }
 
-    #surpriseImage, .cornerImage {
-      width: 120px;
-      height: 120px;
+    .surpriseImage {
+      width: 150px;
+      height: 150px;
       object-fit: cover;
       border: 3px solid white;
       border-radius: 10px;
@@ -53,24 +53,24 @@
       transition: all 0.6s ease;
     }
 
-    /* Center image slightly bigger */
-    #surpriseImage {
-      width: 200px;
-      height: 200px;
+    /* Center image */
+    #pic5 {
+      width: 250px;
+      height: 250px;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%) scale(0);
     }
 
-    /* Corner image positions */
-    #topLeft { top: 10px; left: 10px; }
-    #topRight { top: 10px; right: 10px; }
-    #bottomLeft { bottom: 10px; left: 10px; }
-    #bottomRight { bottom: 10px; right: 10px; }
+    /* Surrounding images positions (4 around the center) */
+    #pic1 { left: 35%; top: 40%; }  /* top-left */
+    #pic2 { left: 65%; top: 40%; }  /* top-right */
+    #pic3 { left: 35%; top: 60%; }  /* bottom-left */
+    #pic4 { left: 65%; top: 60%; }  /* bottom-right */
 
     button {
-      padding: 20px 40px;
-      font-size: 24px;
+      padding: 25px 50px;
+      font-size: 28px;
       cursor: pointer;
       border: none;
       border-radius: 10px;
@@ -84,7 +84,6 @@
       color: white;
     }
 
-    /* Animation classes */
     .showImage {
       display: block;
       opacity: 1;
@@ -96,15 +95,15 @@
   <div id="container">
     <div id="message">for my little spark</div>
     <div id="wordDisplay"></div>
-    <img id="surpriseImage" src="flower.jpg" alt="Surprise Image">
     <button id="animatedButton" onclick="showNextWord()">Click for a Surprise</button>
   </div>
 
-  <!-- Corner images -->
-  <img id="topLeft" class="cornerImage" src="flower.jpg" alt="">
-  <img id="topRight" class="cornerImage" src="flower.jpg" alt="">
-  <img id="bottomLeft" class="cornerImage" src="flower.jpg" alt="">
-  <img id="bottomRight" class="cornerImage" src="flower.jpg" alt="">
+  <!-- 5 images -->
+  <img id="pic1" class="surpriseImage" src="pic1.jpg" alt="">
+  <img id="pic2" class="surpriseImage" src="pic2.jpg" alt="">
+  <img id="pic3" class="surpriseImage" src="pic3.jpg" alt="">
+  <img id="pic4" class="surpriseImage" src="pic4.jpg" alt="">
+  <img id="pic5" class="surpriseImage" src="pic5.jpg" alt="">
 
   <script>
     const words = [
@@ -115,39 +114,33 @@
 
     function showNextWord() {
       const wordDisplay = document.getElementById("wordDisplay");
-      const surpriseImage = document.getElementById("surpriseImage");
       const button = document.getElementById("animatedButton");
-      const corners = [
-        document.getElementById("topLeft"),
-        document.getElementById("topRight"),
-        document.getElementById("bottomLeft"),
-        document.getElementById("bottomRight")
+      const images = [
+        document.getElementById("pic1"),
+        document.getElementById("pic2"),
+        document.getElementById("pic3"),
+        document.getElementById("pic4"),
+        document.getElementById("pic5")
       ];
 
       if (wordIndex < words.length) {
         wordDisplay.textContent = words[wordIndex];
-        surpriseImage.classList.remove("showImage");
-        corners.forEach(c => c.classList.remove("showImage"));
         wordIndex++;
       } else {
-        // Show final message
-        document.getElementById("message").innerText = "for my little spark";
-        document.getElementById("message").style.color = "red";
+        // Clear last word
+        wordDisplay.textContent = "";
+        button.style.display = "none";
 
-        // Animate center image
-        surpriseImage.classList.add("showImage");
-
-        // Animate corner images one by one with delay
-        corners.forEach((img, i) => {
-          setTimeout(() => {
-            img.classList.add("showImage");
-          }, i * 300); // 0ms, 300ms, 600ms, 900ms
+        // Animate 4 surrounding images first
+        images.slice(0,4).forEach((img, i) => {
+          setTimeout(() => img.classList.add("showImage"), i * 300);
         });
 
-        // Hide button
-        button.style.display = "none";
+        // Animate center image last
+        setTimeout(() => images[4].classList.add("showImage"), 1200);
       }
     }
   </script>
 </body>
 </html>
+
