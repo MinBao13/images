@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>for Vivisteria and only her</title>
-  <!-- Lovey font -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
@@ -20,23 +19,26 @@
       color: red;
       position: relative;
       overflow: hidden;
+      padding: 20px;
     }
 
     #container {
       position: relative;
       z-index: 1;
+      max-width: 90%;
+    }
+
+    #titleMessage {
+      font-size: 40px; /* Big spark message */
+      margin-bottom: 30px;
+      color: red;
     }
 
     #message {
-      font-size: 40px;
-      margin-bottom: 20px;
-      color: red;
-    }
-
-    #wordDisplay {
       font-size: 32px;
       margin-bottom: 20px;
       color: red;
+      word-wrap: break-word;
     }
 
     .surpriseImage {
@@ -62,11 +64,11 @@
       transform: translate(-50%, -50%) scale(0);
     }
 
-    /* Surrounding images positions (4 around the center) */
-    #pic1 { left: 35%; top: 40%; }  /* top-left */
-    #pic2 { left: 65%; top: 40%; }  /* top-right */
-    #pic3 { left: 35%; top: 60%; }  /* bottom-left */
-    #pic4 { left: 65%; top: 60%; }  /* bottom-right */
+    /* Surrounding images */
+    #pic1 { left: 35%; top: 40%; }
+    #pic2 { left: 65%; top: 40%; }
+    #pic3 { left: 35%; top: 60%; }
+    #pic4 { left: 65%; top: 60%; }
 
     button {
       padding: 25px 50px;
@@ -93,9 +95,9 @@
 </head>
 <body>
   <div id="container">
-    <div id="message">for my little spark</div>
-    <div id="wordDisplay"></div>
-    <button id="animatedButton" onclick="showNextWord()">Click for a Surprise</button>
+    <div id="titleMessage">for my little spark</div>
+    <div id="message">Chị ơi, em tặng chị</div>
+    <button id="animatedButton" onclick="showNextMessage()">Click for a Surprise</button>
   </div>
 
   <!-- 5 images -->
@@ -106,14 +108,26 @@
   <img id="pic5" class="surpriseImage" src="pic5.jpg" alt="">
 
   <script>
-    const words = [
-      "em","dành","tặng","cái","web","này","cho","chị","để","nói",
-      "rằng","là","cảm","ơn","vì","1","tháng","qua","chị","đã","bên","em"
+    const messages = [
+      "Chị ơi, em tặng chị",
+      "Em biết là dạo gần đây mình có những mâu thuẫn",
+      "Nhưng mà em chỉ muốn nói là tình cảm của em dành cho chị là chân thật chứ không phải nửa vời",
+      "Em mong cái web này phần nào thể hiện được điều đó",
+      "Tâm huyết của em dành cho chị :D"
     ];
-    let wordIndex = 0;
+    let msgIndex = 0;
 
-    function showNextWord() {
-      const wordDisplay = document.getElementById("wordDisplay");
+    function adjustFontSize(element) {
+      let fontSize = 32;
+      element.style.fontSize = fontSize + "px";
+      while (element.scrollWidth > element.clientWidth && fontSize > 16) {
+        fontSize -= 2;
+        element.style.fontSize = fontSize + "px";
+      }
+    }
+
+    function showNextMessage() {
+      const messageDiv = document.getElementById("message");
       const button = document.getElementById("animatedButton");
       const images = [
         document.getElementById("pic1"),
@@ -123,24 +137,23 @@
         document.getElementById("pic5")
       ];
 
-      if (wordIndex < words.length) {
-        wordDisplay.textContent = words[wordIndex];
-        wordIndex++;
+      if (msgIndex < messages.length) {
+        messageDiv.textContent = messages[msgIndex];
+        adjustFontSize(messageDiv);
+        msgIndex++;
       } else {
-        // Clear last word
-        wordDisplay.textContent = "";
+        messageDiv.textContent = "";
         button.style.display = "none";
 
-        // Animate 4 surrounding images first
+        // Animate 4 surrounding images
         images.slice(0,4).forEach((img, i) => {
           setTimeout(() => img.classList.add("showImage"), i * 300);
         });
 
-        // Animate center image last
+        // Animate center image
         setTimeout(() => images[4].classList.add("showImage"), 1200);
       }
     }
   </script>
 </body>
 </html>
-
